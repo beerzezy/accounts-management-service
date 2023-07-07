@@ -1,0 +1,722 @@
+{
+	"info": {
+		"_postman_id": "997dfb76-83e3-4523-a3e5-877df3b2c6c0",
+		"name": "accounts-mgmt-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5639394"
+	},
+	"item": [
+		{
+			"name": "01-create-account_success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Create Success\", function () {",
+							"        pm.expect(jsonData.message).to.eql(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Create Success: ID\", function () {",
+							"        pm.expect(jsonData.data.id).to.eql(1);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Create Success: Full Name\", function () {",
+							"        pm.expect(jsonData.data.full_name).to.eql(\"user1 user1\");",
+							"});",
+							"",
+							"pm.test(\"Create Success: Email\", function () {",
+							"        pm.expect(jsonData.data.email).to.eql(\"user1@account.com\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"full_name\": \"user1 user1\",\n    \"email\": \"user1@account.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8082/accounts-management-service/api/v1/create-account",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8082",
+					"path": [
+						"accounts-management-service",
+						"api",
+						"v1",
+						"create-account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "02-create-account_fail_already_exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Error description is Account already exists.\", function () {",
+							"        pm.expect(jsonData.message).to.eql(\"account: user1@account.com is already exists\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"full_name\": \"user1 user1\",\n    \"email\": \"user1@account.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8082/accounts-management-service/api/v1/create-account",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8082",
+					"path": [
+						"accounts-management-service",
+						"api",
+						"v1",
+						"create-account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "03-create-account_fail_email_invalid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Error description is Email invalid\", function () {",
+							"        pm.expect(jsonData.message).to.eql(\"email: user2$account.com is invalid\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"full_name\": \"user2 user2\",\n    \"email\": \"user2$account.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8082/accounts-management-service/api/v1/create-account",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8082",
+					"path": [
+						"accounts-management-service",
+						"api",
+						"v1",
+						"create-account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "04-create-account_fail_password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Error description is Password invalid\", function () {",
+							"        pm.expect(jsonData.message).to.eql(\"password: is invalid\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"full_name\": \"user2 user2\",\n    \"email\": \"user2@account.com\",\n    \"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8082/accounts-management-service/api/v1/create-account",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8082",
+					"path": [
+						"accounts-management-service",
+						"api",
+						"v1",
+						"create-account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "06-login-account_fail_account_not_found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Error description is Account Not Found\", function () {",
+							"        pm.expect(jsonData.message).to.eql(\"record not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"xxxxx@account.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8082/accounts-management-service/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8082",
+					"path": [
+						"accounts-management-service",
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "07-login-account_fail_password_invalid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Error description is Password invalid\", function () {",
+							"        pm.expect(jsonData.message).to.eql(\"password invalid\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"user1@account.com\",\n    \"password\": \"1234567XXX\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8082/accounts-management-service/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8082",
+					"path": [
+						"accounts-management-service",
+						"api",
+						"v1",
+						"login"
+					]
+				},
+				"description": "aaaaa"
+			},
+			"response": []
+		},
+		{
+			"name": "08-login-account_success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Login Success\", function () {",
+							"        pm.expect(jsonData.message).to.eql(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Login Success: ID\", function () {",
+							"        pm.expect(jsonData.data.id).to.eql(1);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Login Success: Full Name\", function () {",
+							"        pm.expect(jsonData.data.full_name).to.eql(\"user1 user1\");",
+							"});",
+							"",
+							"pm.test(\"Login Success: Email\", function () {",
+							"        pm.expect(jsonData.data.email).to.eql(\"user1@account.com\");",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"token\", jsonData.data.token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"user1@account.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8082/accounts-management-service/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8082",
+					"path": [
+						"accounts-management-service",
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "09-get-account-by-id_success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Get Account Success\", function () {",
+							"        pm.expect(jsonData.message).to.eql(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Get Account Success: ID\", function () {",
+							"        pm.expect(jsonData.data.id).to.eql(1);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Get Account Success: Full Name\", function () {",
+							"        pm.expect(jsonData.data.full_name).to.eql(\"user1 user1\");",
+							"});",
+							"",
+							"pm.test(\"Get Account Success: Email\", function () {",
+							"        pm.expect(jsonData.data.email).to.eql(\"user1@account.com\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8082/accounts-management-service/api/v1/account/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8082",
+					"path": [
+						"accounts-management-service",
+						"api",
+						"v1",
+						"account",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10-get-account-by-id_fail_account_not_found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Get Account Fail\", function () {",
+							"        pm.expect(jsonData.message).to.eql(\"record not found\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8082/accounts-management-service/api/v1/account/9999",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8082",
+					"path": [
+						"accounts-management-service",
+						"api",
+						"v1",
+						"account",
+						"9999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11-update-account_success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Update Account Fail\", function () {",
+							"        pm.expect(jsonData.message).to.eql(\"success\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1,\n    \"full_name\": \"user1\",\n    \"email\": \"user1@account.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8082/accounts-management-service/api/v1/update-account",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8082",
+					"path": [
+						"accounts-management-service",
+						"api",
+						"v1",
+						"update-account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12-get-account-by-id_after_update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Get Account Success\", function () {",
+							"        pm.expect(jsonData.message).to.eql(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Get Account Success: ID\", function () {",
+							"        pm.expect(jsonData.data.id).to.eql(1);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Get Account Success: Full Name\", function () {",
+							"        pm.expect(jsonData.data.full_name).to.eql(\"user1\");",
+							"});",
+							"",
+							"pm.test(\"Get Account Success: Email\", function () {",
+							"        pm.expect(jsonData.data.email).to.eql(\"user1@account.com\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8082/accounts-management-service/api/v1/account/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8082",
+					"path": [
+						"accounts-management-service",
+						"api",
+						"v1",
+						"account",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12-update-account_fail_update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Update Account Fail\", function () {",
+							"        pm.expect(jsonData.message).to.eql(\"no data update\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 9999,\n    \"full_name\": \"user1\",\n    \"email\": \"user1@account.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8082/accounts-management-service/api/v1/update-account",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8082",
+					"path": [
+						"accounts-management-service",
+						"api",
+						"v1",
+						"update-account"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}

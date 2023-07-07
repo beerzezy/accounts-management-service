@@ -5,7 +5,7 @@ jwt:
   signingkey: "secret-key"
   expiration: 600000
 database:
-  host: 192.168.1.139
+  host: db
   port: 5432
   dbname: accountsmanagement
   username: postgres

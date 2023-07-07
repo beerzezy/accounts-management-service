@@ -27,9 +27,13 @@ func (srv *accountServicer) Login(req RequestLoginAccount) (ResponseLoginAccount
 		matchEmail = true
 	}
 
+	if !matchEmail {
+		return ResponseLoginAccount{}, fmt.Errorf("email invalid")
+	}
+
 	matchPwd := comparePasswords(accountInfo.Password, []byte(req.Password))
-	if !matchPwd || !matchEmail {
-		return ResponseLoginAccount{}, fmt.Errorf("user or password invalid")
+	if !matchPwd {
+		return ResponseLoginAccount{}, fmt.Errorf("password invalid")
 	}
 
 	claims := &jwtCustomClaims{
