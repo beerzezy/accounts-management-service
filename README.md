@@ -30,3 +30,6 @@ Start app, run:
 
 ## Test Result
 - Download test result file in path ${project}/_tests/reports
+
+## Environments
+- you can edit environments file in path ${project}/_build/env
