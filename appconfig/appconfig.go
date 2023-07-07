@@ -1,11 +1,9 @@
 package appconfig
 
 type Config struct {
-	Environment string
-	Server      ServerConfig
-	Database    DatabaseConfig
-	JWT         JWTConfig
-	GatewayHost string
+	Server   ServerConfig
+	Database DatabaseConfig
+	JWT      JWTConfig
 }
 
 type ServerConfig struct {
