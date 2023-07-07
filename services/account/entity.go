@@ -1,8 +1,8 @@
 package account
 
 type RequestLoginAccount struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	Email    string `json:"email" validate:"required"`
+	Password string `json:"password" validate:"required"`
 }
 
 type ResponseLoginAccount struct {
@@ -13,9 +13,9 @@ type ResponseLoginAccount struct {
 }
 
 type RequestCreateAccount struct {
-	FullName string `json:"full_name"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	FullName string `json:"full_name" validate:"required"`
+	Email    string `json:"email" validate:"required"`
+	Password string `json:"password" validate:"required"`
 }
 
 type ResponseCreateAccount struct {
@@ -25,9 +25,9 @@ type ResponseCreateAccount struct {
 }
 
 type RequestUpdateAccount struct {
-	Id       uint64 `json:"id"`
-	FullName string `json:"full_name"`
-	Email    string `json:"email"`
+	Id       uint64 `json:"id" validate:"required"`
+	FullName string `json:"full_name" validate:"required"`
+	Email    string `json:"email" validate:"required"`
 }
 
 type ResponseGetAccount struct {

@@ -15,12 +15,12 @@ func (ctrl *controller) Login(c echo.Context) error {
 	var request account.RequestLoginAccount
 	if err := c.Bind(&request); err != nil {
 		log.Errorf("Login bind baseRequest: %v", err)
-		return err
+		return c.JSON(http.StatusBadRequest, errors.NewCannotBindRequestStructError())
 	}
 
 	if err := c.Validate(request); err != nil {
 		log.Errorf("Login Validate Request: %v", err)
-		return errors.NewInvalidRequireFieldError()
+		return c.JSON(http.StatusBadRequest, errors.NewInvalidRequireFieldError())
 	}
 
 	result, err := ctrl.AccountService.Login(request)

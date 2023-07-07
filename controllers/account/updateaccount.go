@@ -15,12 +15,12 @@ func (ctrl *controller) UpdateAccount(c echo.Context) error {
 	var request account.RequestUpdateAccount
 	if err := c.Bind(&request); err != nil {
 		log.Errorf("UpdateAccount bind baseRequest: %v", err)
-		return err
+		return c.JSON(http.StatusBadRequest, errors.NewCannotBindRequestStructError())
 	}
 
 	if err := c.Validate(request); err != nil {
 		log.Errorf("UpdateAccount Validate Request: %v", err)
-		return errors.NewInvalidRequireFieldError()
+		return c.JSON(http.StatusBadRequest, errors.NewInvalidRequireFieldError())
 	}
 
 	err := ctrl.AccountService.UpdateAccount(request)
