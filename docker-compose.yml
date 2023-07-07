@@ -1,0 +1,27 @@
+version: "3.7"
+networks:
+  shared-network:
+    driver: bridge
+services:
+  api:
+    build:
+      context: .
+      dockerfile: _build/dockers/api.dockerfile
+    networks:
+        - shared-network
+    ports:
+        - "8081:8080"
+  db:
+      build:
+          context: .
+          dockerfile: _build/dockers/db.dockerfile
+      pid: "host"
+      hostname: "host"
+      ipc: host
+      networks:
+        - shared-network
+      env_file:
+        - _build/env/db.env
+      ports:
+        - "5432:5432"
+  

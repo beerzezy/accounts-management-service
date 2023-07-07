@@ -1,0 +1,15 @@
+server:
+  port: 8080
+  context: "/intermedia-exchange-service"
+jwt:
+  signingkey: "secret-key"
+  maxHour: 1
+service:
+  usermanagement: "http://192.168.0.8:8082/user-management-service"
+database:
+  host: 192.168.0.8
+  port: 5432
+  dbname: intermediaexchange
+  username: postgres
+  password: password
+  sslmode: disable
