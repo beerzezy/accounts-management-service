@@ -11,7 +11,6 @@ import (
 )
 
 func (ctrl *controller) CreateAccount(c echo.Context) error {
-	ctx := c.Request().Context()
 
 	var request account.RequestCreateAccount
 	if err := c.Bind(&request); err != nil {
@@ -24,7 +23,7 @@ func (ctrl *controller) CreateAccount(c echo.Context) error {
 		return errors.NewInvalidRequireFieldError()
 	}
 
-	result, err := ctrl.AccountService.CreateAccount(ctx, request)
+	result, err := ctrl.AccountService.CreateAccount(request)
 	if err != nil {
 		log.Errorf("CreateAccount Error: %v", err)
 		return c.JSON(http.StatusBadRequest, errors.NewExceptionError(err.Error()))

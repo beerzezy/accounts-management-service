@@ -31,16 +31,6 @@ type DuplicateError struct {
 	ServiceError
 }
 
-type HolderError struct {
-	ServiceError
-}
-type AnnounceBondError struct {
-	ServiceError
-}
-type InquiryBondTrasactiondError struct {
-	ServiceError
-}
-
 func NewServiceError(code int, message string) ServiceError {
 	return ServiceError{Code: code, Message: message}
 }

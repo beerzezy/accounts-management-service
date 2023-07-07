@@ -11,22 +11,21 @@ import (
 )
 
 func (ctrl *controller) Login(c echo.Context) error {
-	ctx := c.Request().Context()
 
 	var request account.RequestLoginAccount
 	if err := c.Bind(&request); err != nil {
-		log.Errorf("CreateAccount bind baseRequest: %v", err)
+		log.Errorf("Login bind baseRequest: %v", err)
 		return err
 	}
 
 	if err := c.Validate(request); err != nil {
-		log.Errorf("CreateAccount Validate Request: %v", err)
+		log.Errorf("Login Validate Request: %v", err)
 		return errors.NewInvalidRequireFieldError()
 	}
 
-	result, err := ctrl.AccountService.Login(ctx, request)
+	result, err := ctrl.AccountService.Login(request)
 	if err != nil {
-		log.Errorf("CreateAccount Error: %v", err)
+		log.Errorf("Login Error: %v", err)
 		return c.JSON(http.StatusBadRequest, errors.NewExceptionError(err.Error()))
 	}
 

@@ -11,7 +11,6 @@ import (
 )
 
 func (ctrl *controller) UpdateAccount(c echo.Context) error {
-	ctx := c.Request().Context()
 
 	var request account.RequestUpdateAccount
 	if err := c.Bind(&request); err != nil {
@@ -24,7 +23,7 @@ func (ctrl *controller) UpdateAccount(c echo.Context) error {
 		return errors.NewInvalidRequireFieldError()
 	}
 
-	err := ctrl.AccountService.UpdateAccount(ctx, request)
+	err := ctrl.AccountService.UpdateAccount(request)
 	if err != nil {
 		log.Errorf("UpdateAccount Error: %v", err)
 		return c.JSON(http.StatusBadRequest, errors.NewExceptionError(err.Error()))

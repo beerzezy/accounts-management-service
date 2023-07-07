@@ -6,6 +6,12 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+type jwtCustomClaims struct {
+	Id   uint64 `json:"id"`
+	Name string `json:"name"`
+	jwt.RegisteredClaims
+}
+
 type jwtMiddleware struct {
 	SigningKey   string
 	SkipperPaths []string
@@ -34,10 +40,4 @@ func (s jwtMiddleware) Handler() echo.MiddlewareFunc {
 		},
 		SigningKey: []byte(s.SigningKey),
 	})
-}
-
-type jwtCustomClaims struct {
-	Id   uint64 `json:"id"`
-	Name string `json:"name"`
-	jwt.RegisteredClaims
 }

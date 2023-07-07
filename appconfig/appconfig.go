@@ -23,6 +23,6 @@ type DatabaseConfig struct {
 }
 
 type JWTConfig struct {
-	Expiration string
+	Expiration uint32
 	SigningKey string
 }

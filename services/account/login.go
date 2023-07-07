@@ -1,14 +1,11 @@
 package account
 
 import (
-	"context"
 	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/labstack/gommon/log"
-	"github.com/spf13/viper"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -18,7 +15,7 @@ type jwtCustomClaims struct {
 	jwt.RegisteredClaims
 }
 
-func (srv *accountServicer) Login(ctx context.Context, req RequestLoginAccount) (ResponseLoginAccount, error) {
+func (srv *accountServicer) Login(req RequestLoginAccount) (ResponseLoginAccount, error) {
 
 	accountInfo, err := srv.repo.AccountCustomRepo.FindAccountByEmail(req.Email)
 	if err != nil {
@@ -35,21 +32,16 @@ func (srv *accountServicer) Login(ctx context.Context, req RequestLoginAccount) 
 		return ResponseLoginAccount{}, fmt.Errorf("user or password invalid")
 	}
 
-	expiration, err := strconv.ParseUint(viper.GetString("jwt.expiration"), 10, 64)
-	if err != nil {
-		return ResponseLoginAccount{}, err
-	}
-
 	claims := &jwtCustomClaims{
 		Id:   accountInfo.Id,
 		Name: accountInfo.FullName,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(msec(expiration))),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(msec(srv.cfg.JWT.Expiration))),
 		},
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	secretKey := viper.GetString("jwt.signingkey")
+	secretKey := srv.cfg.JWT.SigningKey
 	signedJWT, err := token.SignedString([]byte(secretKey))
 	if err != nil {
 		return ResponseLoginAccount{}, err
@@ -74,6 +66,6 @@ func comparePasswords(hashedPwd string, plainPwd []byte) bool {
 	return true
 }
 
-func msec(t uint64) time.Duration {
+func msec(t uint32) time.Duration {
 	return time.Duration(t) * time.Millisecond
 }

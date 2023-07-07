@@ -1,9 +1,5 @@
 package account
 
-import (
-	"context"
-)
-
-func (srv *accountServicer) UpdateAccount(ctx context.Context, req RequestUpdateAccount) error {
+func (srv *accountServicer) UpdateAccount(req RequestUpdateAccount) error {
 	return srv.repo.AccountCustomRepo.UpdateAccount(req.Id, req.FullName, req.Email)
 }

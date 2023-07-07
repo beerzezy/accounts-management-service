@@ -1,7 +1,6 @@
 package account
 
 import (
-	"context"
 	"fmt"
 	"regexp"
 
@@ -10,7 +9,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (srv *accountServicer) CreateAccount(ctx context.Context, req RequestCreateAccount) (ResponseCreateAccount, error) {
+func (srv *accountServicer) CreateAccount(req RequestCreateAccount) (ResponseCreateAccount, error) {
 
 	if valid := validateEmail(req.Email); !valid {
 		return ResponseCreateAccount{}, fmt.Errorf("email: %s is invalid", req.Email)

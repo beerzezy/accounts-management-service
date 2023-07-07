@@ -1,10 +1,6 @@
 package account
 
-import (
-	"context"
-)
-
-func (srv *accountServicer) GetAccountById(ctx context.Context, id uint64) (ResponseGetAccount, error) {
+func (srv *accountServicer) GetAccountById(id uint64) (ResponseGetAccount, error) {
 
 	result, err := srv.repo.AccountCustomRepo.FindAccountById(id)
 	if err != nil {

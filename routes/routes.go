@@ -19,7 +19,7 @@ func RegisterRoutes(e *echo.Echo, db *gorm.DB, cfg appconfig.Config) {
 	repo := repositories.NewRepository(db)
 
 	// provide controller
-	accountController := accountController.NewController(accountService.NewAccountService(repo))
+	accountController := accountController.NewController(accountService.NewAccountService(cfg, repo))
 
 	serverContext := cfg.Server.Context
 	v1 := e.Group(serverContext + "/api/v1")
