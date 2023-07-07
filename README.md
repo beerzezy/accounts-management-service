@@ -25,7 +25,7 @@ Start app, run:
 ```
 
 ## Test
-- Import postman collecttion in path ${project}/_tests/collection/accounts-mgmt-service.postman_collection.json to Postman
+- Import postman collection in path ${project}/_tests/collection/accounts-mgmt-service.postman_collection.json to Postman
 - Run test according to scenario test
 
 ## Test Result
